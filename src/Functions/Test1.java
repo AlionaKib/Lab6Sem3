@@ -5,6 +5,7 @@ import Functions.basic.Exp;
 import Functions.basic.Log;
 import Functions.basic.Sin;
 import Functions.meta.Composition;
+import View.FunctionParameters;
 import javafx.scene.control.Tab;
 
 import java.io.*;
@@ -53,17 +54,17 @@ public class Test1 {
             System.out.println("left border = " + func1.getLeftDomainBorder() + ", right border = " + func1.getRightDomainBorder() +
                     ", count of points: " + func1.getPointCount() + ", function value of last point: " + func1.getPointY(func1.getPointCount() - 1));*/
 
-        Function s = new Sin();
+        /*Function s = new Sin();
         Function s1 = new Sin();
         Function c = new Cos();
-        /*double k=0;
+        double k=0;
         System.out.println("Function value");
         for(int i=0; k < 2*Math.PI; ++i){
             k=0.1*i;
             System.out.println("x = " + k + " sin(x) = " + s.getFunctionValue(k) + ", cos(x) = " + c.getFunctionValue(k));
-        }*/
+        }
         TabulatedFunction f1 = tabulate(s, 0, 2*Math.PI, 10);
-        TabulatedFunction f2 = tabulate(s1, 0, 2*Math.PI, 10);
+        TabulatedFunction f2 = tabulate(s1, 0, 2*Math.PI, 10);*/
         /*System.out.println("Tabulated function value");
         k=0;
         for(int i=0; k < 2*Math.PI; ++i){
@@ -139,7 +140,7 @@ public class Test1 {
         } catch (ClassNotFoundException e) {
             e.getStackTrace();
         }*/
-        printTabulatedFunction(f1);
+        /*printTabulatedFunction(f1);
         System.out.println("tabulated sin(x):" + f1.toString());
         if(f1.equals(f2)) System.out.println("f1, f2 is same");
         System.out.println("Hashcode f2 = " + f2.hashCode() + ", hashcode f1 = " + f1.hashCode());
@@ -157,7 +158,12 @@ public class Test1 {
             System.out.println("Hashcode f3 = " + f3.hashCode() + ", hashcode f1 = " + f1.hashCode());
         } catch (CloneNotSupportedException e){
             e.getStackTrace();
-        }
+        }*/
+
+        FunctionParameters dialog = new FunctionParameters();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
     }
 
 }
