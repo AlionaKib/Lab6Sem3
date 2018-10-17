@@ -15,7 +15,7 @@ import static Functions.Functions.sum;
 import static Functions.TabulatedFunctions.*;
 
 public class Test1 {
-    private static void printTabulatedFunction(TabulatedFunction func1){
+    /*private static void printTabulatedFunction(TabulatedFunction func1){
         System.out.println("Your tabulated function:");
         for(int i=0; i<func1.getPointCount(); ++i){
             System.out.println("x: "+func1.getPointX(i)+", y: "+func1.getPointY(i));
@@ -158,12 +158,12 @@ public class Test1 {
             System.out.println("Hashcode f3 = " + f3.hashCode() + ", hashcode f1 = " + f1.hashCode());
         } catch (CloneNotSupportedException e){
             e.getStackTrace();
-        }*/
+        }
 
         FunctionParameters dialog = new FunctionParameters();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
     }
-
+*/
 }
