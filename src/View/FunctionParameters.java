@@ -10,9 +10,9 @@ public class FunctionParameters extends JDialog {
     private JTextField leftDomainBorder;
     private JTextField rightDomainBorder;
     private JSpinner spinnerPointsCount;
-    private static final int OK = 1;
-    private static final int CANCEL = 0;
-    private int dialogStatus;
+    public static final int OK = 1;
+    public static final int CANCEL = 0;
+    public int dialogStatus;
 
     public FunctionParameters() {
         setContentPane(contentPane);
@@ -25,7 +25,7 @@ public class FunctionParameters extends JDialog {
 
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
-        /*buttonOK.addActionListener(new ActionListener() {
+        buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (getLeftDomainBorder() > getRightDomainBorder()) {
@@ -48,7 +48,7 @@ public class FunctionParameters extends JDialog {
                 setVisible(false);
                 dialogStatus = CANCEL;
             }
-        });*/
+        });
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

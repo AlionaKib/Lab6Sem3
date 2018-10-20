@@ -28,6 +28,7 @@ public class FunctionDocument implements TabulatedFunction {
     public void newFunction(double leftX, double rightX, int pointsCount){
         currentFunction = new ArrayTabulatedFunction(leftX, rightX, pointsCount);
         modified = true;
+        System.out.println(currentFunction.toString());
     }
 
     public void saveFunction(){
