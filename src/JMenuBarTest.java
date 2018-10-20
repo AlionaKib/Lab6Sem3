@@ -52,7 +52,7 @@ public class JMenuBarTest extends JFrame
         menuBar.add(createMenuItems("File", "New", "Save as", "Save", "Open", "Exit"));
         menuBar.add(createMenuItems("Tabulate", "sin(x)", "cos(x)", "log(x)"));
         // JMenuBar использует блочное расположение (заполнитель вполне уместен)
-        menuBar.add(Box.createHorizontalGlue());
+        //menuBar.add(Box.createHorizontalGlue());
         // Разместим в строке меню не выпадающее меню, а надпись со значком
         //JLabel exit = new JLabel(new ImageIcon("images/exit.png"));
         //exit.setText("Выход");
@@ -66,10 +66,10 @@ public class JMenuBarTest extends JFrame
         setVisible(true);
     }
     //--------------------------------------------------------
-    public static void main(String[] args)
+   /* public static void main(String[] args)
     {
         // Подключение украшений для окон
         //JFrame.setDefaultLookAndFeelDecorated(true);
         new JMenuBarTest();
-    }
+    }*/
 }

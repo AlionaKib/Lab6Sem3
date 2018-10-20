@@ -12,13 +12,14 @@ public class FunctionTableModel extends DefaultTableModel {
     private Component component;
 
     public FunctionTableModel(TabulatedFunction function, Component component){
+        super();
         this.function = function;
         this.component = component;
     }
 
     @Override
     public int getRowCount() {
-        return this.function.getPointCount();
+        return 10;
     }
 
     @Override

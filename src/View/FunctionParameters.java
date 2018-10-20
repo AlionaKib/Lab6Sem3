@@ -16,7 +16,6 @@ public class FunctionParameters extends JDialog {
 
     public FunctionParameters() {
         setContentPane(contentPane);
-        setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel();
         spinnerModel.setMinimum(2);
@@ -26,7 +25,7 @@ public class FunctionParameters extends JDialog {
 
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
-        buttonOK.addActionListener(new ActionListener() {
+        /*buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (getLeftDomainBorder() > getRightDomainBorder()) {
@@ -49,7 +48,7 @@ public class FunctionParameters extends JDialog {
                 setVisible(false);
                 dialogStatus = CANCEL;
             }
-        });
+        });*/
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -73,6 +72,8 @@ public class FunctionParameters extends JDialog {
 
         setModal(true);
         setResizable(false);
+        pack();
+        //setVisible(true);
     }
 
     public int showDialog(){
@@ -92,5 +93,12 @@ public class FunctionParameters extends JDialog {
         return (int)spinnerPointsCount.getValue();
     }
 
+
+   /* public static void main(String[] args)
+    {
+        // Подключение украшений для окон
+        //JFrame.setDefaultLookAndFeelDecorated(true);
+        new FunctionParameters();
+    }*/
 
 }

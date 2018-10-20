@@ -160,10 +160,6 @@ public class Test1 {
             e.getStackTrace();
         }
 
-        FunctionParameters dialog = new FunctionParameters();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
-*/
+    }*/
+
 }
