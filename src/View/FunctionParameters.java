@@ -38,7 +38,7 @@ public class FunctionParameters extends JDialog {
                         dialogStatus = OK;
                     }
                 }catch(NumberFormatException e1){
-                    e1.getStackTrace();
+                    JOptionPane.showMessageDialog(FunctionParameters.this, "Can't tabulate", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

@@ -1,14 +1,17 @@
 package View;
 
 import Functions.ArrayTabulatedFunction;
+import Functions.FunctionPoint;
 import Functions.basic.Exp;
 import Functions.basic.Log;
 import Functions.meta.Composition;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 import static Functions.TabulatedFunctions.tabulate;
 
@@ -35,6 +38,8 @@ public class FunctionTable extends JFrame {
         contentPane.setLayout(gbl);
         functionParameters = new FunctionParameters();
         fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text document", "txt");
+        fileChooser.setFileFilter(filter);
         functionDocument = new FunctionDocument();
         functionDocument.newFunction(0,2,2);
         FunctionTableModel tabelFunctionModel = new FunctionTableModel( functionDocument, this);
@@ -98,7 +103,7 @@ public class FunctionTable extends JFrame {
         c.weightx = 1.0;
         gbl.setConstraints(deletePointButton,c);
         contentPane.add(deletePointButton);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         menuBar = new JMenuBar();
         menuBar.add(createMenuItems("File", "New", "Save as", "Save", "Open", "Exit"));
         menuBar.add(createMenuItems("Tabulate", "sin(x)", "cos(x)", "log(x)"));
@@ -108,25 +113,122 @@ public class FunctionTable extends JFrame {
         menuBar.getMenu(0).getItem(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*functionDocument.newFunction(1,4,2);
-                tabelFunctionModel.fireTableDataChanged();
-                System.out.println(tableFunction.getRowCount());*/
                 if(functionParameters.showDialog() == FunctionParameters.OK) {
-                    //System.out.println("function was changed");
                     functionDocument.newFunction(functionParameters.getLeftDomainBorder(),
                             functionParameters.getRightDomainBorder(), functionParameters.getPointsCount());
                     tabelFunctionModel.fireTableDataChanged();
-                    /*scrollPaneTable.repaint();
-                    //tableFunction.revalidate();
-                    tableFunction.repaint();
-                    scrollPaneTable.repaint();
-                    System.out.println("do something");*/
                 }
                 }
             });
 
+        menuBar.getMenu(0).getItem(1).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileChooser.setDialogTitle("Save file");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int result = (int) fileChooser.showSaveDialog(FunctionTable.this);
+                if(result == JFileChooser.APPROVE_OPTION){
+                    try {
+                        functionDocument.saveFunctionAs(fileChooser.getSelectedFile());
+                    }catch(IOException e1){
+                        JOptionPane.showMessageDialog(FunctionTable.this, "Can't write function into file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    JOptionPane.showMessageDialog(FunctionTable.this, "Function saved", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
 
-    setSize(500, 300);
+        menuBar.getMenu(0).getItem(2).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(functionDocument.fileNameAssigned){
+                    try {
+                        functionDocument.saveFunction();
+                    }catch(IOException e1){
+                        JOptionPane.showMessageDialog(FunctionTable.this, "Can't write function into file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                JOptionPane.showMessageDialog(FunctionTable.this, "File do not exist. Please, click save as and choose file", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        menuBar.getMenu(0).getItem(3).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileChooser.setDialogTitle("Open file");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int result = (int) fileChooser.showDialog(FunctionTable.this, "Open");
+                if(result == JFileChooser.APPROVE_OPTION){
+                    try {
+                        functionDocument.loadFunction(fileChooser.getSelectedFile());
+                    }catch(IOException e1){
+                        JOptionPane.showMessageDialog(FunctionTable.this, "Can't load function from file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    tabelFunctionModel.fireTableDataChanged();
+                    JOptionPane.showMessageDialog(FunctionTable.this, "Function loaded", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
+        menuBar.getMenu(0).getItem(4).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //System.out.println("do smth");
+                if(functionDocument.modified) {
+                    System.out.println("Not changed");
+                    int result = JOptionPane.showConfirmDialog(FunctionTable.this, "Exit without saving?", "Exit", JOptionPane.WARNING_MESSAGE);
+                    if(result == JOptionPane.OK_OPTION) {
+                        FunctionTable.this.dispose();
+                        System.exit(0);
+                    }
+                } else {
+                    FunctionTable.this.dispose();
+                    System.exit(0);
+                }
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                if(functionDocument.modified) {
+                    System.out.println("Not changed");
+                    int result = JOptionPane.showConfirmDialog(FunctionTable.this, "Exit without saving?", "Exit", JOptionPane.WARNING_MESSAGE);
+                    if(result == JOptionPane.OK_OPTION) {
+                        FunctionTable.this.dispose();
+                    }
+                    System.exit(0);
+                } else {
+                    FunctionTable.this.dispose();
+                    System.exit(0);
+                }
+            }
+        });
+
+        deletePointButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    functionDocument.deletePoint(tableFunction.getSelectedRow());
+                    tabelFunctionModel.fireTableDataChanged();
+                }catch(Throwable e1){
+                    JOptionPane.showMessageDialog(FunctionTable.this, "Can't delete point", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        addPointButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    functionDocument.addPoint(new FunctionPoint(Double.parseDouble(textFieldX.getText()),Double.parseDouble(textFieldY.getText())));
+                    tabelFunctionModel.fireTableDataChanged();
+                }catch(Throwable e1){
+                    JOptionPane.showMessageDialog(FunctionTable.this, "Can't add point into function", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        setSize(500, 300);
     }
 
     private JMenu createMenuItems(String ... items) {

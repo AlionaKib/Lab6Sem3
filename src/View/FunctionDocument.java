@@ -11,8 +11,8 @@ import static Functions.TabulatedFunctions.writeTabulatedFunction;
 public class FunctionDocument implements TabulatedFunction {
     private TabulatedFunction currentFunction;
     private File currentFile;
-    private boolean modified = false;
-    private boolean fileNameAssigned = false;
+    public boolean modified = false;
+    public boolean fileNameAssigned = false;
 
     public FunctionDocument(){
         currentFile = null;
@@ -21,54 +21,56 @@ public class FunctionDocument implements TabulatedFunction {
 
     public FunctionDocument(TabulatedFunction function, String fileName){
         this.currentFunction = function;
-        currentFile = new File(fileName);
-        fileNameAssigned = true;
+        this.currentFile = new File(fileName+".txt");
+        this.fileNameAssigned = true;
     }
 
     public void newFunction(double leftX, double rightX, int pointsCount){
-        currentFunction = new ArrayTabulatedFunction(leftX, rightX, pointsCount);
-        modified = true;
+        this.currentFunction = new ArrayTabulatedFunction(leftX, rightX, pointsCount);
+        this.modified = true;
         System.out.println(currentFunction.toString());
     }
 
-    public void saveFunction(){
-        if(fileNameAssigned) return;
+    public void saveFunction() throws IOException {
         FileWriter fwr;
         try{
             fwr = new FileWriter(currentFile);
             writeTabulatedFunction(currentFunction, fwr);
             fwr.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException(e);
         }
-        modified = false;
+        this.modified = false;
     }
 
-    public void saveFunctionAs(String fileName){
-        if(currentFunction == null) return;
-        currentFile = new File(fileName);
-        saveFunction();
+    public void saveFunctionAs(File file) throws IOException {
+        this.currentFile = file;
+        try {
+            saveFunction();
+        }catch (IOException e){
+            throw new IOException(e);
+        }
         fileNameAssigned = true;
     }
 
-    public void loadFunction(String fileName){
-        currentFile = new File(fileName);
+    public void loadFunction(File file) throws IOException {
+        this.currentFile = file;
         FileReader frd;
         try{
             frd = new FileReader(currentFile);
             currentFunction = readTabulatedFunction(frd);
             frd.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new FileNotFoundException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException(e);
         }
         modified = false;
         fileNameAssigned = true;
     }
 
     public void tabulateFunction(Function function, double leftX, double rightX, int pointsCount){
-        currentFunction = tabulate(function, leftX, rightX, pointsCount);
+        this.currentFunction = tabulate(function, leftX, rightX, pointsCount);
     }
 
     @Override
