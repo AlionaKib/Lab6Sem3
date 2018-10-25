@@ -1,12 +1,16 @@
 package Functions.basic;
 
-import Functions.Function;
+import Functions.*;
 
 /**
  * Created by Алена on 06.10.2018.
  */
 public class Log implements Function {
     private double base;
+
+    public Log(){
+        this.base = 10;
+    }
 
     public Log(double base){
         this.base = base;

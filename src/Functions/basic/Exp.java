@@ -1,6 +1,6 @@
 package Functions.basic;
 
-import Functions.Function;
+import Functions.*;
 
 /**
  * Created by Алена on 06.10.2018.

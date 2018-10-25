@@ -1,6 +1,7 @@
 package View;
 
 import Functions.*;
+import Functions.basic.Exp;
 
 import java.io.*;
 
