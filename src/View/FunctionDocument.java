@@ -122,6 +122,7 @@ public class FunctionDocument implements TabulatedFunction {
     public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException {
         this.currentFunction.addPoint(point);
         modified = true;
+        System.out.println(currentFunction.toString());
     }
 
 

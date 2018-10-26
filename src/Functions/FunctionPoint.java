@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Created by Алена on 15.09.2018.
  */
-public class FunctionPoint implements /*Serializable,*/ Externalizable {
+public class FunctionPoint implements Serializable/*, Externalizable */{
     private double x;
     private double y;
 
@@ -40,7 +40,7 @@ public class FunctionPoint implements /*Serializable,*/ Externalizable {
         this.y = y;
     }
 
-    @Override
+   /* @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeDouble(x);
         out.writeDouble(y);
@@ -50,7 +50,7 @@ public class FunctionPoint implements /*Serializable,*/ Externalizable {
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         this.x = in.readDouble();
         this.y = in.readDouble();
-    }
+    }*/
 
     @Override
     public String toString() {

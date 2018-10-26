@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Created by Алена on 02.10.2018.
  */
-public class LinkedListTabulatedFunction implements TabulatedFunction, /*Serializable,*/ Externalizable {//реализация функционала списка
+public class LinkedListTabulatedFunction implements TabulatedFunction, Serializable/*, Externalizable */{//реализация функционала списка
 
     class FunctionNode {       //узел списка, который хранит в себе ссылку на предыдущий и следующий элемент
 
@@ -224,18 +224,22 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, /*Seriali
     }
 
     public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException{
-        if(point.getX()<getRightDomainBorder() && point.getX()>getLeftDomainBorder())
+        if(point.getX()<=getRightDomainBorder() && point.getX()>=getLeftDomainBorder())
             for(int i = 0; i<getPointCount(); ++i)
-                if(Math.abs(getNodeByIndex(i).getElement().getX()-point.getX()) < Double.MIN_VALUE)
+                if(Math.abs(getNodeByIndex(i).getElement().getX()-point.getX()) < Double.MIN_VALUE) {
+                    //System.out.println(getNodeByIndex(i).getElement().getX()-point.getX());
                     throw new InappropriateFunctionPointException();
+                }
         int k=0;
         for (; k<size(); ++k){
             if(getNodeByIndex(k).getElement().getX()>point.getX()) break;
         }
         this.addNodeByIndex(k).setElement(point);
+        System.out.println("Point "+point.toString()+" added");
+        System.out.println("Function "+this.toString());
     }
 
-    @Override
+    /*@Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(getPointCount());
         for(int i=0; i < getPointCount(); ++i){
@@ -249,7 +253,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, /*Seriali
         for(int i=0; i<count; ++i){
             this.addNodeToTail().setElement((FunctionPoint) in.readObject());
         }
-    }
+    }*/
 
     @Override
     public String toString() {

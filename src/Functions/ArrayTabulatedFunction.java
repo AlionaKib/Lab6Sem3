@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Created by Алена on 15.09.2018.
  */
-public class ArrayTabulatedFunction implements TabulatedFunction, /*Serializable,*/ Externalizable {
+public class ArrayTabulatedFunction implements TabulatedFunction, Serializable/*, Externalizable*/ {
     private FunctionPoint[] functionPoints;
 
     public ArrayTabulatedFunction(){}
@@ -115,19 +115,27 @@ public class ArrayTabulatedFunction implements TabulatedFunction, /*Serializable
     }
 
     public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException{
-        if(point.getX()<getRightDomainBorder() && point.getX()>getLeftDomainBorder())
+        if(point.getX()<=getRightDomainBorder() && point.getX()>=getLeftDomainBorder())
             for(int i = 0; i<functionPoints.length; ++i) {
-                if (Math.abs(functionPoints[i].getX() - point.getX()) < Double.MIN_VALUE)
+                if (Math.abs(functionPoints[i].getX() - point.getX()) < Double.MIN_VALUE) {
+                    //System.out.println(functionPoints[i].getX() - point.getX());
                     throw new InappropriateFunctionPointException();
+                }
             }
         FunctionPoint[] temp = new FunctionPoint[functionPoints.length+1];
-        System.arraycopy(functionPoints, 0,temp,0,functionPoints.length);
-        temp[temp.length-1] = point;
+        int k=0;
+        for (; k<getPointCount(); ++k){
+            if(functionPoints[k].getX()>point.getX()) break;
+        }
+        System.arraycopy(functionPoints, 0,temp,0,k);
+        temp[k] = point;
+        System.arraycopy(functionPoints, k,temp,k+1,functionPoints.length-k);
         functionPoints = temp;
-        sortPoints();
+        System.out.println("Point "+point.toString()+" added");
+        System.out.println("Function "+this.toString());
     }
 
-    private void sortPoints(){
+    /*private void sortPoints(){
         FunctionPoint point;
         for(int i=0; i < functionPoints.length; ++i)
             for (int j=0; j < functionPoints.length-i-1; ++j)
@@ -136,9 +144,9 @@ public class ArrayTabulatedFunction implements TabulatedFunction, /*Serializable
                     functionPoints[j] = functionPoints[j+1];
                     functionPoints[j+1] = point;
                 }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(getPointCount());
         for(int i=0; i < getPointCount(); ++i){
@@ -152,7 +160,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction, /*Serializable
         for(int i=0; i<getPointCount(); ++i){
             functionPoints[i] = (FunctionPoint)in.readObject();
         }
-    }
+    }*/
 
     @Override
     public String toString() {

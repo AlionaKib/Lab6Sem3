@@ -8,7 +8,7 @@ public class TabulatedFunctions {
 
     public static TabulatedFunction tabulate(Function function, double leftX, double rightX, int pointsCount){
         if(leftX<function.getLeftDomainBorder() || rightX>function.getRightDomainBorder()) throw  new IllegalArgumentException();
-        TabulatedFunction func = new LinkedListTabulatedFunction(leftX, rightX, pointsCount);
+        TabulatedFunction func = new ArrayTabulatedFunction(leftX, rightX, pointsCount);
         for(int i=0; i<func.getPointCount(); ++i){
             func.setPointY(i,function.getFunctionValue(func.getPointX(i)));
         }

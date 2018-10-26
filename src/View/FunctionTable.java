@@ -43,6 +43,8 @@ public class FunctionTable extends JFrame {
         functionLoader = new FunctionLoader();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text document", "txt");
         fileChooser.setFileFilter(filter);
+        FileNameExtensionFilter filter1 = new FileNameExtensionFilter("Class files", "class");
+        fileChooser.setFileFilter(filter1);
         functionDocument = new FunctionDocument();
         functionDocument.newFunction(0,2,2);
         FunctionTableModel tabelFunctionModel = new FunctionTableModel( functionDocument, this);
@@ -117,8 +119,6 @@ public class FunctionTable extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 boolean isLoad = true;
                 System.out.println("Clicked tabulate");
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Class files", "class");
-                fileChooser.setFileFilter(filter);
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int result = (int) fileChooser.showDialog(FunctionTable.this, "Open");
                 if(result == JFileChooser.APPROVE_OPTION){
@@ -130,10 +130,7 @@ public class FunctionTable extends JFrame {
                             tabelFunctionModel.fireTableDataChanged();
                             isLoad = true;
                         }
-                    /*} catch (ClassNotFoundException e1) {
-                        System.out.println(e1.getMessage());
-                        JOptionPane.showMessageDialog(FunctionTable.this, "Class not found", "Error", JOptionPane.ERROR_MESSAGE);*/
-                    } catch (IllegalAccessException e1) {
+                    }  catch (IllegalAccessException e1) {
                         JOptionPane.showMessageDialog(FunctionTable.this, "Access error", "Error", JOptionPane.ERROR_MESSAGE);
                         isLoad = false;
                     } catch (InstantiationException e1) {
@@ -162,8 +159,6 @@ public class FunctionTable extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fileChooser.setDialogTitle("Save file");
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text document", "txt");
-                fileChooser.setFileFilter(filter);
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int result = (int) fileChooser.showSaveDialog(FunctionTable.this);
                 if(result == JFileChooser.APPROVE_OPTION){
@@ -195,8 +190,6 @@ public class FunctionTable extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fileChooser.setDialogTitle("Open file");
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text document", "txt");
-                fileChooser.setFileFilter(filter);
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int result = (int) fileChooser.showDialog(FunctionTable.this, "Open");
                 if(result == JFileChooser.APPROVE_OPTION){

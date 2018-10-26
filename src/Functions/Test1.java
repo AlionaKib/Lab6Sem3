@@ -20,9 +20,9 @@ public class Test1 {
         for(int i=0; i<func1.getPointCount(); ++i){
             System.out.println("x: "+func1.getPointX(i)+", y: "+func1.getPointY(i));
         }
-    }
+    }*/
 
-    public static void main(String[] args) {
+    //public static void main(String[] args) {
         //double[] vals = {0,0.25,1,2.25,4,6.25,9};
             /*TabulatedFunction func1 = new LinkedListTabulatedFunction(0, 3, vals);
             printTabulatedFunction(func1);
@@ -64,8 +64,8 @@ public class Test1 {
             System.out.println("x = " + k + " sin(x) = " + s.getFunctionValue(k) + ", cos(x) = " + c.getFunctionValue(k));
         }
         TabulatedFunction f1 = tabulate(s, 0, 2*Math.PI, 10);
-        TabulatedFunction f2 = tabulate(s1, 0, 2*Math.PI, 10);*/
-        /*System.out.println("Tabulated function value");
+        TabulatedFunction f2 = tabulate(s1, 0, 2*Math.PI, 10);
+        System.out.println("Tabulated function value");
         k=0;
         for(int i=0; k < 2*Math.PI; ++i){
             k=0.1*i;
@@ -137,9 +137,11 @@ public class Test1 {
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            System.out.println("Error1");
         } catch (ClassNotFoundException e) {
             e.getStackTrace();
-        }*/
+            System.out.println("Error2");
+        }
         /*printTabulatedFunction(f1);
         System.out.println("tabulated sin(x):" + f1.toString());
         if(f1.equals(f2)) System.out.println("f1, f2 is same");
@@ -158,6 +160,31 @@ public class Test1 {
             System.out.println("Hashcode f3 = " + f3.hashCode() + ", hashcode f1 = " + f1.hashCode());
         } catch (CloneNotSupportedException e){
             e.getStackTrace();
+        }*/
+
+        /*TabulatedFunction tabulatedLogExp = tabulate(new Composition(new Exp(), new Log(Math.E)), 0, 10, 11);
+        FileOutputStream fwr;
+        FileInputStream fread;
+        TabulatedFunction readedLogExp;
+        File file;
+        try{
+            file = new File("LogExp");
+            fwr = new FileOutputStream(file);
+            outputTabulatedFunction(tabulatedLogExp, fwr);
+            fwr.close();
+            fread = new FileInputStream(file);
+            readedLogExp = inputTabulatedFunction(fread);
+            fread.close();
+            System.out.println("Write: "+tabulatedLogExp.toString());
+            System.out.println("Read: "+readedLogExp.toString());
+            readedLogExp.addPoint(new FunctionPoint(2.5, 1));
+            System.out.println("New read: "+readedLogExp.toString());
+            tabulatedLogExp.addPoint(new FunctionPoint(2.5, 1));
+            System.out.println("New: "+tabulatedLogExp.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InappropriateFunctionPointException e) {
+            e.printStackTrace();
         }
 
     }*/
