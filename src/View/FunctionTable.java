@@ -40,7 +40,7 @@ public class FunctionTable extends JFrame {
         contentPane.setLayout(gbl);
         functionParameters = new FunctionParameters();
         fileChooser = new JFileChooser();
-        functionLoader = new FunctionLoader();
+        //functionLoader = new FunctionLoader();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text document", "txt");
         fileChooser.setFileFilter(filter);
         FileNameExtensionFilter filter1 = new FileNameExtensionFilter("Class files", "class");
@@ -123,6 +123,7 @@ public class FunctionTable extends JFrame {
                 int result = (int) fileChooser.showDialog(FunctionTable.this, "Open");
                 if(result == JFileChooser.APPROVE_OPTION){
                     try {
+                        functionLoader = new FunctionLoader();
                         Function loadedFunction = (Function)functionLoader.getClassFromFile(fileChooser.getSelectedFile()).newInstance();
                         if(functionParameters.showDialog() == FunctionParameters.OK) {
                             functionDocument.tabulateFunction(loadedFunction, functionParameters.getLeftDomainBorder(),
