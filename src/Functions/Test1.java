@@ -7,11 +7,10 @@ import Functions.basic.Sin;
 import Functions.meta.Composition;
 import View.FunctionParameters;
 import javafx.scene.control.Tab;
-import threads.SimpleGenerator;
-import threads.SimpleIntegrator;
-import threads.Task;
+import threads.*;
 
 import java.io.*;
+import java.util.concurrent.Semaphore;
 
 import static Functions.Functions.integrate;
 import static Functions.Functions.power;
@@ -192,7 +191,8 @@ public class Test1 {
         }*/
         System.out.println("Integral exp(x) = " + integrate(new Exp(), 0, 1, 0.001));
         //nonThread();
-        simpleTreads();
+        //simpleTreads();
+        complecatedThreads();
     }
 
 
@@ -211,10 +211,40 @@ public class Test1 {
     }
 
     public static void simpleTreads() {
-        Task task = new Task(100);
-        SimpleGenerator simpleGenerator = new SimpleGenerator(task);
-        SimpleIntegrator simpleIntegrator = new SimpleIntegrator(task);
-        simpleGenerator.run();
-        simpleIntegrator.run();
+        /*Task task = new Task(100);
+        Thread generator = new Thread(new SimpleGenerator(task));
+        Thread integrator = new Thread(new SimpleIntegrator(task));
+        //generator.setPriority(Thread.MAX_PRIORITY);
+        //integrator.setPriority(Thread.MIN_PRIORITY);
+        generator.start();
+        integrator.start();
+        System.out.println();*/
+        Task t = new Task(100+(int)(Math.random()*100));
+        Thread g = new Thread(new SimpleGenerator(t));
+        Thread i = new Thread(new SimpleIntegrator(t));
+        //g.setPriority(Thread.MIN_PRIORITY);
+        //i.setPriority(Thread.MAX_PRIORITY);
+        g.start();
+        i.start();
+        System.out.println();
+    }
+
+    public static void complecatedThreads() {
+        Task task = new Task(100+(int)(Math.random()*100));
+        Semaphore semaphore = new Semaphore(1, true);
+        Thread generator =new Thread((new Generator(task, semaphore)));
+        //g.setPriority(Thread.MAX_PRIORITY);
+        Thread integrator = new Thread((new Integrator(task, semaphore)));
+        //i.setPriority(Thread.MIN_PRIORITY);
+        generator.start();
+        integrator.start();
+        try {
+            Thread.sleep(50);
+            generator.interrupt();
+            integrator.interrupt();
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 }
