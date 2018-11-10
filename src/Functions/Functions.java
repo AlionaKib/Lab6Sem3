@@ -28,4 +28,16 @@ public class Functions {
     public static Function composition(Function f1, Function f2){
         return new Composition(f1, f2);
     }
+
+    public static double integrate(Function f, double leftBorder, double rightBorder, double interval){
+        if(leftBorder<f.getLeftDomainBorder() || rightBorder>f.getRightDomainBorder())
+            throw new FunctionPointIndexOutOfBoundsException();
+        double integral = 0;
+        while((leftBorder+interval)<rightBorder){
+            integral += (f.getFunctionValue(leftBorder+interval) + f.getFunctionValue(leftBorder))*interval/2;
+            leftBorder += interval;
+        }
+        integral += (f.getFunctionValue(leftBorder) + f.getFunctionValue(rightBorder))*(rightBorder-leftBorder)/2;
+        return integral;
+    }
 }

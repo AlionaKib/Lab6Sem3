@@ -275,10 +275,10 @@ public class FunctionTable extends JFrame {
         return menu;
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         FunctionTable dialog = new FunctionTable();
         dialog.pack();
         dialog.setVisible(true);
-    }
+    }*/
 
 }

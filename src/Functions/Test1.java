@@ -7,9 +7,13 @@ import Functions.basic.Sin;
 import Functions.meta.Composition;
 import View.FunctionParameters;
 import javafx.scene.control.Tab;
+import threads.SimpleGenerator;
+import threads.SimpleIntegrator;
+import threads.Task;
 
 import java.io.*;
 
+import static Functions.Functions.integrate;
 import static Functions.Functions.power;
 import static Functions.Functions.sum;
 import static Functions.TabulatedFunctions.*;
@@ -22,7 +26,7 @@ public class Test1 {
         }
     }*/
 
-    //public static void main(String[] args) {
+    public static void main(String[] args) {
         //double[] vals = {0,0.25,1,2.25,4,6.25,9};
             /*TabulatedFunction func1 = new LinkedListTabulatedFunction(0, 3, vals);
             printTabulatedFunction(func1);
@@ -185,8 +189,32 @@ public class Test1 {
             e.printStackTrace();
         } catch (InappropriateFunctionPointException e) {
             e.printStackTrace();
+        }*/
+        System.out.println("Integral exp(x) = " + integrate(new Exp(), 0, 1, 0.001));
+        //nonThread();
+        simpleTreads();
+    }
+
+
+    public static void nonThread() {
+        Task task = new Task(100);
+        for (int i = 0; i < task.getTaskCount(); ++i) {
+            task.setFunction(new Log(Math.random() * 10 + 1));
+            task.setLeftIntegrateBorder(Math.random() * 100);
+            task.setRightIntegrateBorder(Math.random() * 100 + 100);
+            task.setIntegrateInterval(Math.random());
+            System.out.println("Source " + task.getLeftIntegrateBorder() + ' ' + task.getRightIntegrateBorder() + ' ' + task.getIntegrateInterval());
+            double integral = integrate(task.getFunction(), task.getLeftIntegrateBorder(), task.getRightIntegrateBorder(), task.getIntegrateInterval());
+            System.out.println("Result " + task.getLeftIntegrateBorder() + ' ' + task.getRightIntegrateBorder() +
+                    ' ' + task.getIntegrateInterval() + ' ' + integral);
         }
+    }
 
-    }*/
-
+    public static void simpleTreads() {
+        Task task = new Task(100);
+        SimpleGenerator simpleGenerator = new SimpleGenerator(task);
+        SimpleIntegrator simpleIntegrator = new SimpleIntegrator(task);
+        simpleGenerator.run();
+        simpleIntegrator.run();
+    }
 }
