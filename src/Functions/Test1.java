@@ -232,10 +232,12 @@ public class Test1 {
     public static void complecatedThreads() {
         Task task = new Task(100+(int)(Math.random()*100));
         Semaphore semaphore = new Semaphore(1, true);
-        Thread generator =new Thread((new Generator(task, semaphore)));
+        //Thread generator =new Thread((new Generator(task, semaphore)));
         //g.setPriority(Thread.MAX_PRIORITY);
-        Thread integrator = new Thread((new Integrator(task, semaphore)));
+        //Thread integrator = new Thread((new Integrator(task, semaphore)));
         //i.setPriority(Thread.MIN_PRIORITY);
+        Generator generator = new Generator(task, semaphore);
+        Integrator integrator = new Integrator(task,semaphore);
         generator.start();
         integrator.start();
         try {

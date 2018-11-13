@@ -42,7 +42,6 @@ public class Integrator extends Thread{
         for (int i = 0; i < task.getTaskCount(); i++, semaphore.release()) {
             try {
                 semaphore.acquire();
-                sleep(1);
                 if (task.getFunction() == null) {
                     i--;
                     continue;
@@ -50,8 +49,9 @@ public class Integrator extends Thread{
                 System.out.println("Result " + task.getLeftIntegrateBorder() + ' ' + task.getRightIntegrateBorder() + ' '+
                         task.getIntegrateInterval() +' '+ integrate(task.getFunction() , task.getLeftIntegrateBorder(),
                         task.getRightIntegrateBorder(),task.getIntegrateInterval()));
+                sleep(20);
             } catch (InterruptedException e) {
-                System.out.println("Stream was corrupted");
+                System.out.println("Thread was interrupted");
             }
         }
     }

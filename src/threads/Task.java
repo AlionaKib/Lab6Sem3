@@ -48,4 +48,40 @@ public class Task {
     public synchronized int getTaskCount(){
         return this.taskCount;
     }
+
+    /*public Function getFunction(){
+        return this.integrateFunction;
+    }
+
+    public double getRightIntegrateBorder(){
+        return this.rightIntegrateBorder;
+    }
+
+    public double getLeftIntegrateBorder(){
+        return this.leftIntegrateBorder;
+    }
+
+    public double getIntegrateInterval(){
+        return this.integrateInterval;
+    }
+
+    public void setFunction(Function f){
+        this.integrateFunction = f;
+    }
+
+    public void setRightIntegrateBorder(double rightIntegrateBorder){
+        this.rightIntegrateBorder = rightIntegrateBorder;
+    }
+
+    public void setLeftIntegrateBorder(double leftIntegrateBorder){
+        this.leftIntegrateBorder = leftIntegrateBorder;
+    }
+
+    public void setIntegrateInterval(double integrateInterval){
+        this.integrateInterval = integrateInterval;
+    }
+
+    public int getTaskCount(){
+        return this.taskCount;
+    }*/
 }

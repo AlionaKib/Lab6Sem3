@@ -23,7 +23,7 @@ public class SimpleIntegrator implements Runnable {
                     System.out.println("Result " + task.getLeftIntegrateBorder() + ' ' + task.getRightIntegrateBorder() + ' '+
                             task.getIntegrateInterval() +' '+ integrate(task.getFunction() , task.getLeftIntegrateBorder(),
                                     task.getRightIntegrateBorder(),task.getIntegrateInterval()));
-                    sleep(80);
+                    sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
 

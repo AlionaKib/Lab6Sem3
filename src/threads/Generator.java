@@ -37,20 +37,19 @@ public class Generator extends Thread {
         this.semaphore=semaphore;
     }
     public void run() {
-        //int n=task.getCountTask();
         for(int i=0; i<task.getTaskCount(); i++,semaphore.release()){
             try {
                 semaphore.acquire();
-                sleep(1);
                 task.setRightIntegrateBorder(100 + Math.random() * 100);
                 task.setLeftIntegrateBorder(Math.random() * 100);
                 task.setIntegrateInterval(Math.random());
                 task.setFunction(new Log(Math.random()*10 + 1));
                 System.out.println("Sourse " + task.getLeftIntegrateBorder() + ' '+
                         task.getRightIntegrateBorder() + ' '+ task.getIntegrateInterval());
+                sleep(20);
             }
             catch (InterruptedException e){
-                System.out.println("Stream was corrupted");
+                System.out.println("Thread was interrupted");
             }
         }
     }

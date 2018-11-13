@@ -21,7 +21,7 @@ public class SimpleGenerator implements Runnable {
                     task.setFunction(new Log(Math.random()*10 + 1));
                     System.out.println("Sourse " + task.getLeftIntegrateBorder() + ' '+
                             task.getRightIntegrateBorder() + ' '+ task.getIntegrateInterval());
-                    sleep(80);
+                    sleep(20);
                 }
                 catch (InterruptedException e){
                     e.printStackTrace();
